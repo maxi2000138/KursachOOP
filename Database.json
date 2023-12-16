@@ -1,0 +1,41 @@
+{
+    "admins": [
+        {
+            "password": "123",
+            "username": "Kolya"
+        },
+        {
+            "password": "444",
+            "username": "Petya"
+        },
+        {
+            "password": "password",
+            "username": "Vasiliy"
+        }
+    ],
+    "clients": [
+        {
+            "balance": [
+                {
+                    "currencyId": 0,
+                    "value": 0.0
+                }
+            ],
+            "password": "123",
+            "username": "Vassya"
+        }
+    ],
+    "currencies": [
+        {
+            "currencyName": "Dollar",
+            "currencySymbol": "$",
+            "id": 0
+        },
+        {
+            "currencyName": "Euro",
+            "currencySymbol": "E",
+            "id": 1
+        }
+    ],
+    "requests": []
+}
