@@ -13,25 +13,26 @@ class ClientRequest
     std::string requestText;
     virtual void OnApply();
 protected:
+    Database** database;
     static nlohmann::json toJson(nlohmann::json& j,const ClientRequest& clientRequest);
     static void fromJson(const nlohmann::json& j, ClientRequest& clientRequest);
-    Database* database;
-    SaveLoadService* saveLoadService;
 public:
-    std::string clientUsername;    
-
+    std::string clientUsername;
+    
     ClientRequest(std::string username, std::string text) : clientUsername(username), requestText(text) { }
     ClientRequest() {  }
 
-    void Initialize(Database* Database, SaveLoadService* SaveLoadService)
+    bool IsConsidered() { return isApplied; }
+    bool IsApplied() { return isApplied; }
+    std::string RequestText() {return requestText; }
+
+    void Initialize(Database** Database)
     {
         database = Database;
-        saveLoadService = SaveLoadService;
     }
-
-    bool IsConsidered() { return isApplied; }
-    void TryApply();
-    void ShowRequestInfo();
+    
     void Approve();
     void Decline();
+    
+    void ShowRequestInfo();
 };

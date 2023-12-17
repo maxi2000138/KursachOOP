@@ -2,6 +2,7 @@
 
 #include "AuthorizationService.h"
 #include "../../Database/Database.h"
+#include "../RequestService/RequestService.h"
 
 using namespace std;
 
@@ -43,9 +44,9 @@ bool TryAuthUser(vector<T>* usersVector, UserBase** authorizedUser)
 
 bool AuthorizationService::TryAuthorizeClient(UserBase** client)
 {
-    if(TryAuthUser(&database->clients,  client))
+    if(TryAuthUser(&(*database)->clients,  client))
     {
-        reinterpret_cast<Client*>(*client)->Construct(database, saveLoadService);
+        reinterpret_cast<Client*>(*client)->Construct(database, saveLoadService, requestService);
         return true;
     }
 
@@ -54,9 +55,9 @@ bool AuthorizationService::TryAuthorizeClient(UserBase** client)
 
 bool AuthorizationService::TryAuthorizeAdmin(UserBase** admin)
 {
-    if(TryAuthUser(&database->admins, admin))
+    if(TryAuthUser(&(*database)->admins, admin))
     {
-        reinterpret_cast<Admin*>(*admin)->Construct(database, saveLoadService);
+        reinterpret_cast<Admin*>(*admin)->Construct(database, saveLoadService, requestService);
         return true;
     }
 

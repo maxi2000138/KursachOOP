@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include "Client.h"
 
+#include "../Services/RequestService/RequestService.h"
 #include "../Services/StaticDataService/SaveLoadService.h"
 #include "Requests/CurrencyClientRequest.h"
 
@@ -12,32 +13,6 @@ void ShowBalance(const vector<CurrencyAccount>& accounts)
         account.ShowAccountInfo();
 }
 
-void AddAccountRequest(Database* database, SaveLoadService* saveLoadService, string userName)
-{
-    string currencyName;
-
-    while(true)
-    {
-        cout << "Enter the currency in which you want to open an account" << endl;
-        cin >> currencyName;
-
-        for (auto currency : database->currencies)
-        {
-            if (currency.currencyName == currencyName)
-            {
-                CurrencyClientRequest request(&currency, userName, currencyName);
-                request.Initialize(database, saveLoadService);
-                database->currencyClientRequests.push_back(request);
-                saveLoadService->SaveDatabase(database);
-                
-                cout << "Your account send for consideration!" << endl;
-                return;
-            }
-        }
-
-        cout << "Enter existing currency" << endl;
-    }
-}
 
 void DebugLogInfo()
 {
@@ -48,10 +23,10 @@ void DebugLogInfo()
 
 bool Client::showMenu()
 {
-    for (auto request : database->currencyClientRequests)
+    for (auto request : (*database)->currencyClientRequests)
     {
         if(request.clientUsername == getUserName())
-            request.TryApply();
+            requestService->TryApply(request);
     }
 
     while (true)
@@ -67,7 +42,7 @@ bool Client::showMenu()
             ShowBalance(balance);
             break;
         case 2:
-            AddAccountRequest(database, saveLoadService, getUserName());
+            requestService->AddAccountRequest(database, saveLoadService, getUserName());
             break;
         case 3:
             system("cls");
@@ -78,6 +53,6 @@ bool Client::showMenu()
 
 void Client::AddAccount(Currency* currency)
 {
-    CurrencyAccount currencyAccount(currency);
-    balance.push_back(currencyAccount);
+    const CurrencyAccount* currencyAccount = new CurrencyAccount(currency);
+    balance.push_back(*currencyAccount);
 }

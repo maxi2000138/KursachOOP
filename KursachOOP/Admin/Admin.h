@@ -1,4 +1,5 @@
-﻿class SaveLoadService;
+﻿class RequestService;
+class SaveLoadService;
 class Database;
 
 #pragma once
@@ -9,14 +10,16 @@ class Database;
 class Admin : public UserBase
 {
 private:
-    Database* database;
+    Database** database;
     SaveLoadService* saveLoadService;
+    RequestService* requestService;
 public:
     Admin(std::string username, std::string password) : UserBase(username, password) { }
     Admin() : UserBase("", "") { }
 
-    void Construct(Database* Database, SaveLoadService* SaveLoadService)
+    void Construct(Database** Database, SaveLoadService* SaveLoadService, RequestService* RequestService)
     {
+        requestService = RequestService;
         saveLoadService = SaveLoadService;
         database = Database;
     }

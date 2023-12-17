@@ -2,6 +2,7 @@
 #include "Admin.h"
 
 #include "../Database/Database.h"
+#include "../Services/RequestService/RequestService.h"
 #include "../Services/StaticDataService/SaveLoadService.h"
 
 using namespace std;
@@ -63,7 +64,7 @@ void RemoveCurrency(Database* database, SaveLoadService* saveLoadService)
     }
 }
 
-void CheckRequests(Database* database)
+void CheckRequests(Database* database, RequestService* requestService)
 {
     int num;
     for (auto& request : database->currencyClientRequests)
@@ -81,11 +82,11 @@ void CheckRequests(Database* database)
                 switch (num)
                 {
                 case 1:
-                    request.Approve();
+                    requestService->ApproveRequest(request);
                     considered = true;
                     break;
                 case 2:
-                    request.Decline();
+                    requestService->DeclineRequest(request);
                     considered = true;
                     break;
                 case 3:
@@ -128,18 +129,18 @@ bool Admin::showMenu()
         switch (num)
         {
         case 1:
-            ShowAllCurrencies(database);
+            ShowAllCurrencies(*database);
             break;
             
         case 2:
-            AddCurrency(database,saveLoadService);
+            AddCurrency(*database,saveLoadService);
             break;
 
         case 3:
-            RemoveCurrency(database,saveLoadService);
+            RemoveCurrency(*database,saveLoadService);
             break;
         case 4:
-            CheckRequests(database);
+            CheckRequests(*database, requestService);
             break;
         case 5:
             system("cls");

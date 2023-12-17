@@ -19,6 +19,10 @@
                 {
                     "currencyId": 0,
                     "value": 0.0
+                },
+                {
+                    "currencyId": 1,
+                    "value": 0.0
                 }
             ],
             "password": "123",

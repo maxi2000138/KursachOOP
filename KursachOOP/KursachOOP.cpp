@@ -48,16 +48,36 @@ bool AuthorizeUser(AuthorizationService* authorizationService, UserBase** user)
     }
 }
 
+void CompositionRoot(Database*& database, SaveLoadService*& saveLoadService, RequestService*& requestService, AuthorizationService*& authorizationService)
+{
+    database = nullptr;
+    saveLoadService = new SaveLoadService;
+    requestService = new RequestService(&database, saveLoadService);
+    authorizationService = new  AuthorizationService(&database, saveLoadService,requestService);
+}
+
+void LoadData(Database*& database, SaveLoadService* saveLoadService)
+{
+    database = saveLoadService->LoadDatabase();
+}
+
+void InitializeServices(RequestService* requestService)
+{
+    requestService->InitalizeRequests();
+}
+
 int main()
 {
-    auto* saveLoadService = new SaveLoadService;
-    auto* database = saveLoadService->LoadDatabase();
+    Database* database;
+    SaveLoadService* saveLoadService;
+    RequestService* requestService;
+    AuthorizationService* authorizationService;
 
-    RequestService* requestService = new RequestService(database, saveLoadService);
-    auto* authorizationService = new  AuthorizationService(database, saveLoadService);
-
-    requestService->InitalizeRequests();
+    CompositionRoot(database, saveLoadService, requestService, authorizationService);
     
+    LoadData(database, saveLoadService);
+    InitializeServices(requestService);
+        
     
     UserBase* user;
 
@@ -70,7 +90,7 @@ int main()
     delete saveLoadService;
     delete database;
     delete authorizationService;
-    
+    1
     return 0;
 }
 

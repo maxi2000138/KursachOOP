@@ -4,7 +4,7 @@
 
 void CurrencyClientRequest::OnApply()
 {
-    for (auto it = begin (database->clients); it != end (database->clients); ++it)
+    for (auto it = begin ((*database)->clients); it != end ((*database)->clients); ++it)
     {
         if(it->getUserName() == clientUsername)
         {
@@ -13,12 +13,11 @@ void CurrencyClientRequest::OnApply()
     }
 }
 
-void CurrencyClientRequest::Initialize(Database* Database, SaveLoadService* SaveLoadService)
+void CurrencyClientRequest::Initialize(Database** Database)
 {
-    saveLoadService = SaveLoadService;
     database = Database;
     
-    for (auto& curr : database->currencies)
+    for (auto& curr : (*database)->currencies)
     {
         if(curr.id == currencyId)
             currency = &curr;

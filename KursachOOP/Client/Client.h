@@ -1,4 +1,5 @@
 ﻿#pragma once
+class RequestService;
 class SaveLoadService;
 class Database;
 #include "../external/json/single_include/nlohmann/json.hpp"
@@ -8,17 +9,19 @@ class Database;
 
 class Client : public UserBase
 {
-    Database* database;
+    Database** database;
     SaveLoadService* saveLoadService;
+    RequestService* requestService;
     std::vector<CurrencyAccount> balance;
 public:
 
     Client() : UserBase("", "") {  }
 
-    void Construct(Database* Database, SaveLoadService* SaveLoadService)
+    void Construct(Database** Database, SaveLoadService* SaveLoadService, RequestService* RequestService)
     {
         saveLoadService = SaveLoadService;
         database = Database;
+        requestService = RequestService;
         for (auto& balanc : balance)
         {
             balanc.Initialize(database);

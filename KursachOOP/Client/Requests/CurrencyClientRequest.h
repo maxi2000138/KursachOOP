@@ -13,10 +13,10 @@ class CurrencyClientRequest : public ClientRequest
     string currencyText(string currencyName) { return "Opening Account in " + currencyName; }
     void OnApply() override;
 public:
-    CurrencyClientRequest(Currency* currency, string userName, string currencyName) : ClientRequest(userName, currencyText(currencyName)) , currency(currency)  { }
+    CurrencyClientRequest(Currency* currency, string userName, string currencyName, int CurrencyId) : ClientRequest(userName, currencyText(currencyName)) , currency(currency), currencyId(CurrencyId)  { }
     CurrencyClientRequest() { }
     
-    void Initialize(Database* database, SaveLoadService* saveLoadService);
+    void Initialize(Database** database);
     
 
     friend void to_json(nlohmann::json& j, const CurrencyClientRequest& db)

@@ -12,44 +12,14 @@ void ClientRequest::Approve()
     isConsidered = true;
     isApplied = true;
     OnApply();
-    saveLoadService->SaveDatabase(database);
 }
 
 void ClientRequest::Decline()
 {
     isConsidered = true;
     isApplied = false;
-    saveLoadService->SaveDatabase(database);
 }
 
-void ClientRequest::TryApply()
-{
-    cout << "Your request: " << requestText << " is in the status: ";
-    
-    if(!isConsidered)
-    {
-        cout << "In process\n";
-        return;
-    }
-    
-    if(isApplied)
-    {
-        cout << "Approved\n";
-    }
-    else
-    {
-        cout << "Decline\n ";
-    }
-    
-    auto it = std::find_if(database->currencyClientRequests.begin(), database->currencyClientRequests.end(), [this](const ClientRequest& request) {
-    return request.requestText == this->requestText;});
-
-    if (it != database->currencyClientRequests.end())
-    {
-        database->currencyClientRequests.erase(it);
-        saveLoadService->SaveDatabase(database);
-    }
-}
 
 void ClientRequest::ShowRequestInfo()
 {

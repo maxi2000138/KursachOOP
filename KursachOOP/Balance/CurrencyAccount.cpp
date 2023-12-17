@@ -7,12 +7,12 @@ using namespace std;
 
 void CurrencyAccount::ShowAccountInfo()
 {
-    cout << "Account currency" << currency->currencyName << "currency value: " << value << endl;
+    cout << "Account currency: " << currency->currencyName << " --- currency value: " << value << endl;
 }
 
-void CurrencyAccount::Initialize(Database* database)
+void CurrencyAccount::Initialize(Database** database)
 {
-    for (auto& curr : database->currencies)
+    for (auto& curr : (*database)->currencies)
     {
         if(curr.id == currencyId)
             currency = &curr;
