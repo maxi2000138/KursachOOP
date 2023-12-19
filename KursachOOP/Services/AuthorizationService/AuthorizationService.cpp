@@ -46,7 +46,7 @@ bool AuthorizationService::TryAuthorizeClient(UserBase** client)
 {
     if(TryAuthUser(&(*database)->clients,  client))
     {
-        reinterpret_cast<Client*>(*client)->Construct(database, saveLoadService, requestService);
+        reinterpret_cast<Client*>(*client)->Construct(database, saveLoadService, requestService, currencyService);
         return true;
     }
 

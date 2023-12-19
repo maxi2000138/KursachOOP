@@ -1,4 +1,5 @@
 ﻿#pragma once
+class CurrencyService;
 class RequestService;
 class SaveLoadService;
 class Database;
@@ -12,22 +13,24 @@ class Client : public UserBase
     Database** database;
     SaveLoadService* saveLoadService;
     RequestService* requestService;
+    CurrencyService* currencyService;
     std::vector<CurrencyAccount> balance;
 public:
 
     Client() : UserBase("", "") {  }
 
-    void Construct(Database** Database, SaveLoadService* SaveLoadService, RequestService* RequestService)
+    void Construct(Database** Database, SaveLoadService* SaveLoadService, RequestService* RequestService, CurrencyService* CurrencyService)
     {
         saveLoadService = SaveLoadService;
         database = Database;
         requestService = RequestService;
+        currencyService = CurrencyService;
+        
         for (auto& balanc : balance)
         {
             balanc.Initialize(database);
         }
     }
-    
 
     void AddAccount(Currency* currency);
     bool showMenu() override;

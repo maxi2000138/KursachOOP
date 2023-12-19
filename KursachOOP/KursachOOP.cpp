@@ -4,11 +4,18 @@
 #include "Database/Database.h"
 #include "external/json/single_include/nlohmann/json.hpp"
 #include "Services/AuthorizationService/AuthorizationService.h"
+#include "Services/CurrencyService/CurrencyService.h"
 #include "Services/RequestService/RequestService.h"
 #include "Services/StaticDataService/SaveLoadService.h"
 
 using json = nlohmann::json;
 using namespace std;
+
+Database* database;
+SaveLoadService* saveLoadService;
+RequestService* requestService;
+AuthorizationService* authorizationService;
+CurrencyService* currencyService;
 
 
 bool AuthorizeUser(AuthorizationService* authorizationService, UserBase** user)
@@ -48,12 +55,14 @@ bool AuthorizeUser(AuthorizationService* authorizationService, UserBase** user)
     }
 }
 
-void CompositionRoot(Database*& database, SaveLoadService*& saveLoadService, RequestService*& requestService, AuthorizationService*& authorizationService)
+void CompositionRoot(Database*& database, SaveLoadService*& saveLoadService, RequestService*& requestService, AuthorizationService*& authorizationService,
+                    CurrencyService*& currencyService)
 {
     database = nullptr;
     saveLoadService = new SaveLoadService;
     requestService = new RequestService(&database, saveLoadService);
-    authorizationService = new  AuthorizationService(&database, saveLoadService,requestService);
+    currencyService = new CurrencyService(&database, saveLoadService);
+    authorizationService = new AuthorizationService(&database, saveLoadService,requestService, currencyService);
 }
 
 void LoadData(Database*& database, SaveLoadService* saveLoadService)
@@ -68,16 +77,10 @@ void InitializeServices(RequestService* requestService)
 
 int main()
 {
-    Database* database;
-    SaveLoadService* saveLoadService;
-    RequestService* requestService;
-    AuthorizationService* authorizationService;
-
-    CompositionRoot(database, saveLoadService, requestService, authorizationService);
+    CompositionRoot(database, saveLoadService, requestService, authorizationService, currencyService);
     
     LoadData(database, saveLoadService);
     InitializeServices(requestService);
-        
     
     UserBase* user;
 
@@ -90,7 +93,7 @@ int main()
     delete saveLoadService;
     delete database;
     delete authorizationService;
-    1
+
     return 0;
 }
 

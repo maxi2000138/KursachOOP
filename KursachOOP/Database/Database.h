@@ -35,10 +35,9 @@ public:
     
     void from_json(const nlohmann::json& j, Database& db)
     {
-        
         if(j.contains("currencies")) j.at("currencies").get_to(db.currencies);
-        if(j.contains("admins"))     j.at("admins").get_to(db.admins);
-        if(j.contains("clients"))    j.at("clients").get_to(db.clients);
-        if(j.contains("requests"))   j.at("requests").get_to(db.currencyClientRequests);
+        if(j.contains("admins")) j.at("admins").get_to(db.admins);
+        if(j.contains("clients")) j.at("clients").get_to(db.clients);
+        if(j.contains("requests")) j.at("requests").get_to(db.currencyClientRequests);
     }
 };

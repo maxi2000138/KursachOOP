@@ -10,8 +10,13 @@ class CurrencyAccount
     float value;
 public:
     void ShowAccountInfo();
+    void AddMoney(int value);
+    void RemoveMoney(int value);
     CurrencyAccount(Currency* currency): currency(currency), currencyId(currency->id),value(0){ }
     CurrencyAccount() { }
+    float Value() { return value; }
+    std::string CurrencyName() { return currency->currencyName; }
+    
 
     void Initialize(Database** database);
     

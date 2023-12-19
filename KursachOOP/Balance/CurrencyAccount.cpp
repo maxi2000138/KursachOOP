@@ -18,3 +18,15 @@ void CurrencyAccount::Initialize(Database** database)
             currency = &curr;
     }
 }
+
+void CurrencyAccount::AddMoney(int money)
+{
+    value += money;
+}
+
+void CurrencyAccount::RemoveMoney(int money)
+{
+    value -= money;
+}
+
+

@@ -1,8 +1,8 @@
 ﻿#include <iostream>
 #include "Client.h"
 
+#include "../Services/CurrencyService/CurrencyService.h"
 #include "../Services/RequestService/RequestService.h"
-#include "../Services/StaticDataService/SaveLoadService.h"
 #include "Requests/CurrencyClientRequest.h"
 
 using namespace std;
@@ -13,12 +13,41 @@ void ShowBalance(const vector<CurrencyAccount>& accounts)
         account.ShowAccountInfo();
 }
 
+CurrencyAccount* ChooseAccount(std::vector<CurrencyAccount>& balance)
+{
+    string currName;
+    while(true)
+    {
+        cout << "Choose account currency: " << endl;
+    
+        for (auto account : balance)
+            cout << account.CurrencyName() << endl;
+
+        cin >> currName;
+
+        for(auto& curr : balance)
+            if(currName == curr.CurrencyName())
+                return &curr;
+    }
+}
+
+int ChooseMoneyValue()
+{
+    int moneyValue;
+    cout << "Choose currency value: ";
+    cin >> moneyValue;
+    return moneyValue;
+}
+
+
 
 void DebugLogInfo()
 {
     cout << "1. Show balance" << endl;
     cout << "2. Send an account application" << endl;
-    cout << "3. Exit" << endl;
+    cout << "3. Add money" << endl;
+    cout << "4. Remove money" << endl;
+    cout << "5. Exit" << endl;
 }
 
 bool Client::showMenu()
@@ -31,6 +60,8 @@ bool Client::showMenu()
 
     while (true)
     {
+        CurrencyAccount* curr;
+        int money;
         cout << endl;
         DebugLogInfo();
     
@@ -45,6 +76,18 @@ bool Client::showMenu()
             requestService->AddAccountRequest(database, saveLoadService, getUserName());
             break;
         case 3:
+            curr = ChooseAccount(balance);
+            money = ChooseMoneyValue();
+            if(currencyService->TryAddMoney(curr, money))
+                cout << "Operation was successful!" << endl;
+            break;
+        case 4:
+            curr = ChooseAccount(balance);
+            money = ChooseMoneyValue();
+            if(currencyService->TryRemoveMoney(curr, money))
+                cout << "Operation was successful!" << endl;
+            break;
+        case 5:
             system("cls");
             return false;
         }   

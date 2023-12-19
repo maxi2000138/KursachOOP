@@ -234,6 +234,7 @@
     <ClCompile Include="Database\Database.cpp" />
     <ClCompile Include="KursachOOP.cpp" />
     <ClCompile Include="Services\AuthorizationService\AuthorizationService.cpp" />
+    <ClCompile Include="Services\CurrencyService\CurrencyService.cpp" />
     <ClCompile Include="Services\RequestService\RequestService.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -308,6 +309,7 @@
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
     <ClCompile Include="Services\StaticDataService\SaveLoadService.cpp" />
+    <ClCompile Include="Services\ValidatorService\Validator.cpp" />
     <ClCompile Include="UserBase\UserBase.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -391,8 +393,10 @@
     <ClInclude Include="Currency\Currency.h" />
     <ClInclude Include="Database\Database.h" />
     <ClInclude Include="Services\AuthorizationService\AuthorizationService.h" />
+    <ClInclude Include="Services\CurrencyService\CurrencyService.h" />
     <ClInclude Include="Services\RequestService\RequestService.h" />
     <ClInclude Include="Services\StaticDataService\SaveLoadService.h" />
+    <ClInclude Include="Services\ValidatorService\Validator.h" />
     <ClInclude Include="UserBase\UserBase.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -43,3 +43,11 @@ c
 3KursachOOP/Services/RequestService/RequestService.h,0\4\04ef87a501cc81bbdf73804422e29bf31ded8b64
 e
 5KursachOOP/Services/RequestService/RequestService.cpp,4\0\40c9f36c3b25dd09d191433b12e5a9b9a0388d5d
+g
+7KursachOOP/Services/CurrencyService/CurrencyService.cpp,9\b\9b93014e68ebccfa1aef2d3e0ea4a61f0b298ec7
+e
+5KursachOOP/Services/CurrencyService/CurrencyService.h,7\5\75fb19198fe44ab43c1639f2142dfc5011e22423
+`
+0KursachOOP/Services/ValidatorService/Validator.h,c\3\c3465837de329b9825775be686bf67ebe52d18de
+b
+2KursachOOP/Services/ValidatorService/Validator.cpp,b\8\b85a3f19e13927d74a3172f149505af1ed5116da
