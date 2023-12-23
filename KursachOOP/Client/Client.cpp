@@ -47,7 +47,8 @@ void DebugLogInfo()
     cout << "2. Send an account application" << endl;
     cout << "3. Add money" << endl;
     cout << "4. Remove money" << endl;
-    cout << "5. Exit" << endl;
+    cout << "5. Send money to other user" << endl;
+    cout << "6. Exit" << endl;
 }
 
 bool Client::showMenu()
@@ -88,9 +89,19 @@ bool Client::showMenu()
                 cout << "Operation was successful!" << endl;
             break;
         case 5:
+            requestService->AddSendMoneyRequest(database, saveLoadService, this);
+            break;
+        case 6:
             system("cls");
             return false;
-        }   
+        }
+
+        string str;
+        cout << "Enter to clear..";
+        cin.clear();
+        getline(cin, str);
+        getline(cin, str);
+        system("cls");
     }
 }
 

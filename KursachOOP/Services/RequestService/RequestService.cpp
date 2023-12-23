@@ -8,6 +8,11 @@ void RequestService::InitalizeRequests()
     {
         request.Initialize(database);
     }
+    
+    for (auto& request : (*database )->sendMoneyClientRequests)
+    {
+        request.Initialize(database, *clientFactory);
+    }
 }
 
 void RequestService::AddAccountRequest(Database** database, SaveLoadService* saveLoadService, string userName)
@@ -35,6 +40,52 @@ void RequestService::AddAccountRequest(Database** database, SaveLoadService* sav
         }
 
         cout << "Enter existing currency" << endl;
+    }
+}
+
+void RequestService::AddSendMoneyRequest(Database** database, SaveLoadService* saveLoadService, Client* sender)
+{
+    string userName, currencyName;
+    int amount;
+
+    while(true)
+    {
+
+        cout << "Enter the user name you want to send" << endl;
+        cin >> userName;
+        
+        cout << "Enter the currency in which you want to send" << endl;
+        cin >> currencyName;
+
+        cout << "Enter the amount you want to send" << endl;
+        cin >> amount;
+
+
+        Currency* currency;
+        
+        for (auto& currency : (*database)->currencies)
+        {
+            if (currency.currencyName == currencyName)
+            {
+                for (auto& senderAccount : sender->balance)
+                {
+                    if(senderAccount.CurrencyName() == currencyName && senderAccount.Value() >= amount)
+                    {
+                        senderAccount.RemoveMoney(amount);
+                        SendMoneyClientRequest request(sender->getUserName(), userName, currency.id, amount);
+                        request.Initialize(database, *clientFactory);
+                
+                        (*database)->sendMoneyClientRequests.push_back(request);
+                        saveLoadService->SaveDatabase(*database);
+                
+                        cout << "Your request send for consideration!" << endl;
+                        return;
+                    }
+                }
+            }
+        }
+        
+        cout << "Enter valid data!" << endl;
     }
 }
 
@@ -79,3 +130,4 @@ void RequestService::TryApply(ClientRequest& request)
         }
     }
 }
+

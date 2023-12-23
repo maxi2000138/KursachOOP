@@ -14,10 +14,11 @@ class Client : public UserBase
     SaveLoadService* saveLoadService;
     RequestService* requestService;
     CurrencyService* currencyService;
-    std::vector<CurrencyAccount> balance;
 public:
+    std::vector<CurrencyAccount> balance;
 
     Client() : UserBase("", "") {  }
+    Client(std::string username, std::string password) : UserBase(username, password) {  }
 
     void Construct(Database** Database, SaveLoadService* SaveLoadService, RequestService* RequestService, CurrencyService* CurrencyService)
     {

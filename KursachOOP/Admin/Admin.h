@@ -1,8 +1,9 @@
-﻿class RequestService;
+﻿#pragma once
+class ClientFactory;
+class RequestService;
 class SaveLoadService;
 class Database;
 
-#pragma once
 #include "../UserBase/UserBase.h"
 #include "../external/json/single_include/nlohmann/json.hpp"
 
@@ -13,15 +14,17 @@ private:
     Database** database;
     SaveLoadService* saveLoadService;
     RequestService* requestService;
+    ClientFactory* clientFactory;
 public:
     Admin(std::string username, std::string password) : UserBase(username, password) { }
     Admin() : UserBase("", "") { }
 
-    void Construct(Database** Database, SaveLoadService* SaveLoadService, RequestService* RequestService)
+    void Construct(Database** Database, SaveLoadService* SaveLoadService, RequestService* RequestService, ClientFactory* ClientFactory)
     {
         requestService = RequestService;
         saveLoadService = SaveLoadService;
         database = Database;
+        clientFactory = ClientFactory;
     }
 
     bool showMenu() override;

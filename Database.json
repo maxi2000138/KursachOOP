@@ -1,16 +1,13 @@
 {
+    "addCurrencyRequests": [],
     "admins": [
         {
             "password": "123",
-            "username": "Kolya"
+            "username": "admin"
         },
         {
             "password": "444",
             "username": "Petya"
-        },
-        {
-            "password": "password",
-            "username": "Vasiliy"
         }
     ],
     "clients": [
@@ -22,14 +19,43 @@
                 },
                 {
                     "currencyId": 1,
-                    "value": 0.0
+                    "value": 2.0
                 }
             ],
             "password": "123",
             "username": "Vassya"
+        },
+        {
+            "balance": [
+                {
+                    "currencyId": 1,
+                    "value": 3.0
+                }
+            ],
+            "password": "228",
+            "username": "roza"
+        },
+        {
+            "balance": [],
+            "password": "sadf",
+            "username": "Andrey"
+        },
+        {
+            "balance": [],
+            "password": "43",
+            "username": "Rurik"
+        },
+        {
+            "balance": [],
+            "password": "Bukin53",
+            "username": "Genadiy"
+        },
+        {
+            "balance": [],
+            "password": "rurik32",
+            "username": "Quri"
         }
     ],
-
     "currencies": [
         {
             "currencyName": "Dollar",
@@ -42,5 +68,15 @@
             "id": 1
         }
     ],
-    "requests": []
+    "sendMoneyRequests": [
+        {
+            "amount": 3,
+            "clientUsername": "Vassya",
+            "currencyId": 1,
+            "isApplied": true,
+            "isConsidered": true,
+            "requestText": "Send money to roza",
+            "targetUserName": "roza"
+        }
+    ]
 }

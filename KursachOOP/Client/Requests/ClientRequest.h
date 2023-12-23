@@ -12,6 +12,7 @@ class ClientRequest
     bool isApplied = false;
     std::string requestText;
     virtual void OnApply();
+    virtual void OnDecline();
 protected:
     Database** database;
     static nlohmann::json toJson(nlohmann::json& j,const ClientRequest& clientRequest);
@@ -22,7 +23,7 @@ public:
     ClientRequest(std::string username, std::string text) : clientUsername(username), requestText(text) { }
     ClientRequest() {  }
 
-    bool IsConsidered() { return isApplied; }
+    bool IsConsidered() { return isConsidered; }
     bool IsApplied() { return isApplied; }
     std::string RequestText() {return requestText; }
 

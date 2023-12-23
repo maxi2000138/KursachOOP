@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include "../../Admin/AdminFactory.h"
+#include "../../Client/ClientFactory.h"
 #include "../../Database/Database.h"
 #include "../RequestService/RequestService.h"
 
@@ -8,22 +10,14 @@ class AuthorizationService
 {
 private:
     Database** database;
-    SaveLoadService* saveLoadService;
-    RequestService* requestService;
-    CurrencyService* currencyService;
+    ClientFactory* clientFactory;
+    AdminFactory* adminFactory;
 
 public:
-    AuthorizationService(Database** db, SaveLoadService* SaveLoadService, RequestService* RequestService,
-                CurrencyService* CurrencyService)
-    {
-        currencyService = CurrencyService;
-        saveLoadService = SaveLoadService;
-        requestService = RequestService;
-        database = db;
-    }
-    
-    bool TryAuthorizeClient(UserBase** client);
+    AuthorizationService(Database** db, ClientFactory* ClientFactory, AdminFactory* AdminFactory)
+    : database(db),clientFactory(ClientFactory),adminFactory(AdminFactory) { }
 
+    bool TryAuthorizeClient(UserBase** client);
     bool TryAuthorizeAdmin(UserBase** client);
 
 };

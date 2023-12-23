@@ -12,6 +12,7 @@ class CurrencyClientRequest : public ClientRequest
     int currencyId;
     string currencyText(string currencyName) { return "Opening Account in " + currencyName; }
     void OnApply() override;
+    void OnDecline() override;
 public:
     CurrencyClientRequest(Currency* currency, string userName, string currencyName, int CurrencyId) : ClientRequest(userName, currencyText(currencyName)) , currency(currency), currencyId(CurrencyId)  { }
     CurrencyClientRequest() { }

@@ -18,6 +18,7 @@ void ClientRequest::Decline()
 {
     isConsidered = true;
     isApplied = false;
+    OnDecline();
 }
 
 
@@ -31,6 +32,12 @@ void ClientRequest::OnApply()
     
 
 }
+
+void ClientRequest::OnDecline()
+{
+    
+}
+
 
 nlohmann::json ClientRequest::toJson(nlohmann::json& j, const ClientRequest& cl)
 {

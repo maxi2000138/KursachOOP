@@ -46,7 +46,7 @@ bool AuthorizationService::TryAuthorizeClient(UserBase** client)
 {
     if(TryAuthUser(&(*database)->clients,  client))
     {
-        reinterpret_cast<Client*>(*client)->Construct(database, saveLoadService, requestService, currencyService);
+        clientFactory->InitUser(reinterpret_cast<Client*>(*client));
         return true;
     }
 
@@ -57,7 +57,7 @@ bool AuthorizationService::TryAuthorizeAdmin(UserBase** admin)
 {
     if(TryAuthUser(&(*database)->admins, admin))
     {
-        reinterpret_cast<Admin*>(*admin)->Construct(database, saveLoadService, requestService);
+        adminFactory->InitAdmin(reinterpret_cast<Admin*>(*admin));
         return true;
     }
 

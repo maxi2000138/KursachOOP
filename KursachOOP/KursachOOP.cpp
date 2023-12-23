@@ -16,6 +16,8 @@ SaveLoadService* saveLoadService;
 RequestService* requestService;
 AuthorizationService* authorizationService;
 CurrencyService* currencyService;
+ClientFactory* clientFactory;
+AdminFactory* adminFactory;
 
 
 bool AuthorizeUser(AuthorizationService* authorizationService, UserBase** user)
@@ -55,14 +57,15 @@ bool AuthorizeUser(AuthorizationService* authorizationService, UserBase** user)
     }
 }
 
-void CompositionRoot(Database*& database, SaveLoadService*& saveLoadService, RequestService*& requestService, AuthorizationService*& authorizationService,
-                    CurrencyService*& currencyService)
+void CompositionRoot()
 {
     database = nullptr;
     saveLoadService = new SaveLoadService;
-    requestService = new RequestService(&database, saveLoadService);
+    requestService = new RequestService(&database, saveLoadService, &clientFactory);
     currencyService = new CurrencyService(&database, saveLoadService);
-    authorizationService = new AuthorizationService(&database, saveLoadService,requestService, currencyService);
+    clientFactory = new ClientFactory(&database, saveLoadService,requestService, currencyService);
+    adminFactory = new AdminFactory(&database, saveLoadService,requestService, currencyService, clientFactory);
+    authorizationService = new AuthorizationService(&database, clientFactory, adminFactory);
 }
 
 void LoadData(Database*& database, SaveLoadService* saveLoadService)
@@ -77,8 +80,7 @@ void InitializeServices(RequestService* requestService)
 
 int main()
 {
-    CompositionRoot(database, saveLoadService, requestService, authorizationService, currencyService);
-    
+    CompositionRoot();
     LoadData(database, saveLoadService);
     InitializeServices(requestService);
     
@@ -88,7 +90,7 @@ int main()
     {
         while(user->showMenu())
         { }
-    }
+    }       
     
     delete saveLoadService;
     delete database;

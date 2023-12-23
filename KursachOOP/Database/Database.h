@@ -6,6 +6,7 @@
 #include "../Admin/Admin.h"
 #include "../Client/Client.h"
 #include "../Client/Requests/CurrencyClientRequest.h"
+#include "../Client/Requests/SendMoneyClientRequest.h"
 #include "../Currency/Currency.h"
 
 using namespace std;
@@ -20,6 +21,7 @@ public:
     vector<Currency> currencies;
     
     vector<CurrencyClientRequest> currencyClientRequests;
+    vector<SendMoneyClientRequest> sendMoneyClientRequests;
     
     
     void to_json(nlohmann::json& j, const Database& db)
@@ -29,7 +31,8 @@ public:
             {"currencies", db.currencies },
             {"admins", db.admins },
           {"clients", db.clients },
-            {"requests", db.currencyClientRequests },
+            {"addCurrencyRequests", db.currencyClientRequests },
+            {"sendMoneyRequests", db.sendMoneyClientRequests },
         };
     }
     
@@ -38,6 +41,7 @@ public:
         if(j.contains("currencies")) j.at("currencies").get_to(db.currencies);
         if(j.contains("admins")) j.at("admins").get_to(db.admins);
         if(j.contains("clients")) j.at("clients").get_to(db.clients);
-        if(j.contains("requests")) j.at("requests").get_to(db.currencyClientRequests);
+        if(j.contains("addCurrencyRequests")) j.at("addCurrencyRequests").get_to(db.currencyClientRequests);
+        if(j.contains("sendMoneyRequests")) j.at("sendMoneyRequests").get_to(db.sendMoneyClientRequests);
     }
 };

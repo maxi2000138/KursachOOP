@@ -2,6 +2,17 @@
 #include "../../Database/Database.h"
 #include "../../Services/StaticDataService/SaveLoadService.h"
 
+void CurrencyClientRequest::Initialize(Database** Database)
+{
+    database = Database;
+    
+    for (auto& curr : (*database)->currencies)
+    {
+        if(curr.id == currencyId)
+            currency = &curr;
+    }
+}
+
 void CurrencyClientRequest::OnApply()
 {
     for (auto it = begin ((*database)->clients); it != end ((*database)->clients); ++it)
@@ -13,14 +24,8 @@ void CurrencyClientRequest::OnApply()
     }
 }
 
-void CurrencyClientRequest::Initialize(Database** Database)
+void CurrencyClientRequest::OnDecline()
 {
-    database = Database;
     
-    for (auto& curr : (*database)->currencies)
-    {
-        if(curr.id == currencyId)
-            currency = &curr;
-    }
 }
 
